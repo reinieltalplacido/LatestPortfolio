@@ -11,7 +11,7 @@ const Navbar = ({ isDarkMode, toggleTheme }: NavbarProps) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-6 w-full max-w-4xl mx-auto bg-background/80 backdrop-blur-md">
       <div className="flex items-center">
-        <div className="text-2xl font-bold">RT</div>
+      
       </div>
       <div className="flex items-center space-x-6">
         <a href="#" className="hover:text-primary transition-colors">
