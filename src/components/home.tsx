@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import emailjs from '@emailjs/browser';
 import { useToast } from "./ui/use-toast";
 import { Toaster } from "./ui/toaster";
+import { inject } from "@vercel/analytics";
 
 emailjs.init("3uTEW4Zev2niJ39DB"); // Replace with your Public Key
 
@@ -73,6 +74,8 @@ const Home = () => {
       setIsDarkMode(systemPrefersDark);
       document.documentElement.classList.toggle("dark", systemPrefersDark);
     }
+    // Inject Vercel Analytics
+    inject();
   }, []);
 
   const toggleTheme = () => {
