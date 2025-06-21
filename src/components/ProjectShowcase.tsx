@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaReact, FaNodeJs, FaBootstrap, FaPencilRuler } from "react-icons/fa";
 import { SiMongodb, SiTypescript, SiTailwindcss, SiJavascript, SiCss3, SiFigma, SiHtml5, SiFirebase } from "react-icons/si";
 
@@ -15,14 +15,10 @@ interface Project {
 
 interface ProjectCardProps {
   project: Project;
-  onImageClick: (thumbnailUrl: string) => void;
+  onImageClick: (project: Project) => void;
 }
 
-// Inline ProjectCard component since there seems to be an issue with the import
-const ProjectCard: React.FC<ProjectCardProps> = ({
-  project,
-  onImageClick,
-}) => {
+const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, onImageClick }) => {
   const techIcons: Record<string, JSX.Element> = {
     HTML: <SiHtml5 color="#E34F26" className="inline mr-1" />,
     CSS: <SiCss3 color="#1572B6" className="inline mr-1" />,
@@ -40,19 +36,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <div
-      className="rounded-xl border bg-card text-card-foreground shadow transition-all duration-300 flex flex-col h-full"
+      className="rounded-xl border bg-card text-card-foreground shadow transition-all duration-300 flex flex-col h-full cursor-pointer hover:scale-[1.02]"
+      onClick={() => onImageClick(project)}
     >
-      <div className="relative overflow-hidden rounded-t-xl bg-white cursor-pointer" onClick={() => onImageClick(project.thumbnail)}>
+      <div className="relative overflow-hidden rounded-t-xl bg-white">
         <img
           src={project.thumbnail}
           alt={project.title}
-          className="w-full h-40 object-contain transition-transform duration-300 hover:scale-110 "
+          className="w-full h-40 object-contain transition-transform duration-300"
+          loading="lazy"
         />
       </div>
       <div className="p-6 flex flex-col flex-1">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
         <p className="text-muted-foreground mb-4">{project.description}</p>
-        <p className="text-muted-foreground">{project.fullDescription}</p>
         <div className="mt-auto pt-4">
           <h4 className="font-semibold mb-2">Technologies</h4>
           <div className="flex flex-wrap gap-2">
@@ -69,7 +66,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
     </div>
   );
-};
+});
 
 interface ProjectShowcaseProps {
   projects?: Project[];
@@ -80,14 +77,41 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   projects = defaultProjects,
   isDarkMode,
 }) => {
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewProject, setPreviewProject] = useState<Project | null>(null);
 
-  const handleImageClick = (thumbnailUrl: string) => {
-    setPreviewImage(thumbnailUrl);
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (previewProject) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [previewProject]);
+
+  const handleCardClick = (project: Project) => {
+    setPreviewProject(project);
   };
 
   const closePreview = () => {
-    setPreviewImage(null);
+    setPreviewProject(null);
+  };
+
+  const techIcons: Record<string, JSX.Element> = {
+    HTML: <SiHtml5 color="#E34F26" className="inline mr-1" />,
+    CSS: <SiCss3 color="#1572B6" className="inline mr-1" />,
+    JavaScript: <SiJavascript color="#F7DF1E" className="inline mr-1" />,
+    React: <FaReact color="#61DAFB" className="inline mr-1" />,
+    "Node.js": <FaNodeJs color="#339933" className="inline mr-1" />,
+    MongoDB: <SiMongodb color="#47A248" className="inline mr-1" />,
+    TypeScript: <SiTypescript color="#3178C6" className="inline mr-1" />,
+    "Tailwind CSS": <SiTailwindcss color="#06B6D4" className="inline mr-1" />,
+    Bootstrap: <FaBootstrap color="#7952B3" className="inline mr-1" />,
+    Figma: <SiFigma color="#F24E1E" className="inline mr-1" />,
+    Firebase: <SiFirebase color="#FFCA28" className="inline mr-1" />,
+    "UI/UX Design": <FaPencilRuler color="#6366F1" className="inline mr-1" />,
   };
 
   return (
@@ -99,32 +123,83 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             <ProjectCard
               key={project.id}
               project={project}
-              onImageClick={handleImageClick}
+              onImageClick={handleCardClick}
             />
           ))}
         </div>
       </div>
 
-      {previewImage && (
+      {previewProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
           onClick={closePreview}
+          aria-modal="true"
+          role="dialog"
         >
           <div
-            className="relative max-w-screen-lg max-h-screen-lg rounded-lg overflow-hidden"
+            className="relative w-full max-w-4xl md:max-w-4xl max-h-[90vh] bg-[#181c2a] text-white rounded-2xl shadow-2xl overflow-y-auto border border-neutral-800 mx-2 sm:mx-auto transition-all duration-300 transform animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
+            tabIndex={-1}
           >
-            <img
-              src={previewImage}
-              alt="Project Preview"
-              className="w-full h-full object-contain"
-            />
+            {/* Close Button - moved outside image container for better alignment */}
             <button
-              className="absolute top-2 right-2 text-gray-800 text-2xl bg-white bg-opacity-75 rounded-full p-1"
+              className="absolute top-2 right-2 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-xl sm:text-2xl text-white bg-black bg-opacity-40 rounded-full hover:bg-opacity-70 transition leading-none p-0 z-10"
               onClick={closePreview}
+              aria-label="Close"
             >
-              &times;
+              <span className="flex items-center justify-center w-full h-full">&times;</span>
             </button>
+            {/* Image */}
+            <div className="w-full bg-[#23263a] flex items-center justify-center rounded-t-2xl overflow-hidden p-0 m-0">
+              <img
+                src={previewProject.thumbnail}
+                alt={previewProject.title}
+                className="object-cover w-full h-40 sm:h-56 md:h-64 max-h-64"
+                style={{ borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+                loading="lazy"
+              />
+            </div>
+            {/* Content */}
+            <div className="p-4 sm:p-8 pb-4 sm:pb-6 flex flex-col gap-3 sm:gap-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-1">{previewProject.title}</h2>
+              <p className="text-base sm:text-lg text-gray-300 mb-2">{previewProject.description}</p>
+              <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">{previewProject.fullDescription}</p>
+              <div>
+                <h3 className="font-semibold text-base sm:text-lg mb-2">Technologies</h3>
+                <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
+                  {previewProject.technologies.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md flex items-center gap-1 border border-primary/20"
+                    >
+                      {techIcons[tech] || null}{tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-3 sm:gap-4 mt-2">
+                {previewProject.demoUrl && (
+                  <a
+                    href={previewProject.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2 sm:px-4 sm:py-2 rounded-lg bg-gradient-to-r from-orange-400 to-yellow-500 text-black font-semibold shadow hover:from-orange-500 hover:to-yellow-400 transition text-sm sm:text-base"
+                  >
+                    View Demo
+                  </a>
+                )}
+                {previewProject.repoUrl && (
+                  <a
+                    href={previewProject.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2 sm:px-4 sm:py-2 rounded-lg border border-orange-400 text-orange-400 font-semibold hover:bg-orange-400 hover:text-black transition text-sm sm:text-base"
+                  >
+                    View Repo
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}

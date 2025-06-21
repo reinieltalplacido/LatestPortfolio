@@ -3,7 +3,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Mail, FileText } from "lucide-react";
 import { FaReact, FaBootstrap } from "react-icons/fa";
-import { SiTailwindcss, SiFigma, SiHtml5, SiCss3, SiJavascript } from "react-icons/si";
+import { SiTailwindcss, SiFigma, SiHtml5, SiCss3, SiJavascript, SiTypescript } from "react-icons/si";
 
 interface HeroProps {
   name?: string;
@@ -19,7 +19,7 @@ const Hero = ({
   name = "Reiniel Anjelo T. Talplacido",
   title = "Web Developer/Designer",
  description = "Currently a 3rd-year IT student who designs in Figma and develops modern, responsive websites using HTML, CSS, React, and Tailwind CSS.",
-  skills = ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS", "Bootstrap", "Figma"],
+  skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Tailwind CSS", "Bootstrap", "Figma"],
   location = "Philippines",
   time = "11:28 AM",
   availability = true,
@@ -30,6 +30,7 @@ const Hero = ({
     HTML: <SiHtml5 color="#E34F26" className="inline mr-1" />,
     CSS: <SiCss3 color="#1572B6" className="inline mr-1" />,
     JavaScript: <SiJavascript color="#F7DF1E" className="inline mr-1" />,
+    TypeScript: <SiTypescript color="#3178C6" className="inline mr-1" />,
     React: <FaReact color="#61DAFB" className="inline mr-1" />,
     "Tailwind CSS": <SiTailwindcss color="#06B6D4" className="inline mr-1" />,
     Bootstrap: <FaBootstrap color="#7952B3" className="inline mr-1" />,
