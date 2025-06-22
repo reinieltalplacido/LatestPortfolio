@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaReact, FaNodeJs, FaBootstrap, FaPencilRuler } from "react-icons/fa";
+import { FaReact, FaNodeJs, FaBootstrap, FaPencilRuler, FaRocket, FaFolderOpen } from "react-icons/fa";
 import { SiMongodb, SiTypescript, SiTailwindcss, SiJavascript, SiCss3, SiFigma, SiHtml5, SiFirebase } from "react-icons/si";
 
 interface Project {
@@ -11,6 +11,7 @@ interface Project {
   fullDescription: string;
   demoUrl?: string;
   repoUrl?: string;
+  features?: string[];
 }
 
 interface ProjectCardProps {
@@ -137,7 +138,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
           role="dialog"
         >
           <div
-            className="relative w-full max-w-4xl md:max-w-4xl max-h-[90vh] bg-[#181c2a] text-white rounded-2xl shadow-2xl overflow-y-auto border border-neutral-800 mx-2 sm:mx-auto transition-all duration-300 transform animate-scaleIn"
+            className="relative w-full max-w-4xl md:max-w-4xl max-h-[90vh] bg-[#181c2a] text-white rounded-2xl shadow-2xl border border-neutral-800 mx-2 sm:mx-auto transition-all duration-300 transform animate-scaleIn flex flex-col"
             onClick={(e) => e.stopPropagation()}
             tabIndex={-1}
           >
@@ -150,7 +151,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               <span className="flex items-center justify-center w-full h-full">&times;</span>
             </button>
             {/* Image */}
-            <div className="w-full bg-[#23263a] flex items-center justify-center rounded-t-2xl overflow-hidden p-0 m-0">
+            <div className="w-full bg-[#23263a] flex items-center justify-center rounded-t-2xl overflow-hidden p-0 m-0 flex-shrink-0">
               <img
                 src={previewProject.thumbnail}
                 alt={previewProject.title}
@@ -160,10 +161,25 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               />
             </div>
             {/* Content */}
-            <div className="p-4 sm:p-8 pb-4 sm:pb-6 flex flex-col gap-3 sm:gap-4">
+            <div className="p-4 sm:p-8 pb-4 sm:pb-6 flex flex-col gap-3 sm:gap-4 flex-1 overflow-y-auto custom-scrollbar">
               <h2 className="text-2xl sm:text-3xl font-bold mb-1">{previewProject.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-2">{previewProject.description}</p>
               <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">{previewProject.fullDescription}</p>
+              {previewProject.features && (
+                <div className="mb-4">
+                  <h3 className="font-semibold text-base sm:text-lg mb-3">Key Features</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {previewProject.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2 bg-[#23263a] rounded-lg px-4 py-3">
+                        <span className="text-indigo-400">
+                          <svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20' className='w-5 h-5'><path fillRule='evenodd' d='M16.704 6.29a1 1 0 0 1 .006 1.414l-6.002 6.06a1 1 0 0 1-1.414.006l-3.002-2.96a1 1 0 1 1 1.408-1.42l2.294 2.263 5.295-5.345a1 1 0 0 1 1.415-.018z' clipRule='evenodd'/></svg>
+                        </span>
+                        <span className="text-sm text-white">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div>
                 <h3 className="font-semibold text-base sm:text-lg mb-2">Technologies</h3>
                 <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
@@ -183,9 +199,10 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
                     href={previewProject.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-2 sm:px-4 sm:py-2 rounded-lg bg-gradient-to-r from-orange-400 to-yellow-500 text-black font-semibold shadow hover:from-orange-500 hover:to-yellow-400 transition text-sm sm:text-base"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow hover:from-indigo-600 hover:to-purple-600 transition text-sm border-none outline-none"
                   >
-                    View Demo
+                    <FaRocket className="text-base" />
+                    View Live Demo
                   </a>
                 )}
                 {previewProject.repoUrl && (
@@ -193,9 +210,10 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
                     href={previewProject.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-2 sm:px-4 sm:py-2 rounded-lg border border-orange-400 text-orange-400 font-semibold hover:bg-orange-400 hover:text-black transition text-sm sm:text-base"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-400 text-indigo-400 font-semibold hover:bg-indigo-400 hover:text-white transition text-sm bg-transparent"
                   >
-                    View Repo
+                    <FaFolderOpen className="text-base" />
+                    View Source Code
                   </a>
                 )}
               </div>
@@ -218,6 +236,14 @@ const defaultProjects: Project[] = [
     technologies: ["React", "Node.js", "MongoDB", "Stripe"],
     fullDescription:
       "Built a complete e-commerce solution with user authentication, product catalog, shopping cart, and secure payment processing using Stripe. Implemented responsive design for optimal mobile experience and admin dashboard for inventory management.",
+    features: [
+      "Role-based access control (Teachers/Students)",
+      "Real-time messaging and announcements",
+      "Course management and file sharing",
+      "Secure Firebase authentication",
+      "Cloud-based data storage with Firestore",
+      "Mobile-responsive design"
+    ]
   },
   {
     id: "2",
@@ -234,11 +260,21 @@ const defaultProjects: Project[] = [
   },
   {
     id: "3",
-    title: "Quiz",
-    description: "A web-based quiz application.",
-    thumbnail: "/Quiz.JPG",
-    technologies: ["React", "TypeScript", "Tailwind CSS"],
-    fullDescription: "Developed a quiz app with multiple question types, scoring, and instant feedback. Responsive design for all devices.",
+    title: "DevHub",
+    description: "🚀 DevHub – Personal Space for Developers\nDevHub is a personal productivity hub built by a developer, for developers. It helps you stay focused by keeping your projects, tasks, notes, and favorite tools in one clean and simple space.",
+    thumbnail: "/Devhub.JPG",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Vite"],
+    fullDescription: "DevHub is a personal productivity and collaboration space built for developers, by a developer. It's designed to help manage your learning, tasks, and projects all in one place—clean, focused, and fast.",
+    features: [
+      "Project tracking dashboard",
+      "Personal dev notes section",
+      "To-do list for task management",
+      "Quick-access tools panel",
+      "Clean and minimal UI",
+      "Organized dev workflow"
+    ],
+    demoUrl: "https://devhub-gules.vercel.app",
+    repoUrl: "https://github.com/reinieltalplacido/devhub-personal-space"
   },
   {
     id: "4",
@@ -273,6 +309,24 @@ const defaultProjects: Project[] = [
       "Created a web application that generates unique images using machine learning algorithms. Users can adjust parameters to influence the style and content of generated images. Implemented with a Python/Flask backend using TensorFlow and a React frontend.",
     demoUrl: "https://example.com/ai-image-demo",
     repoUrl: "https://github.com/username/ai-image-generator",
+  },
+  {
+    id: "7",
+    title: "ASUS Login/Signup UI",
+    description: "A clean and modern login/signup interface designed in Figma for ASUS branding.",
+    thumbnail: "/EHYYYY.jpg",
+    technologies: ["Figma", "UI/UX Design"],
+    fullDescription: "Designed a minimalistic and user-friendly login and signup interface tailored for ASUS, using Figma. The design emphasizes brand consistency, simplicity, and usability with clean forms, intuitive layout, and mobile responsiveness.",
+    demoUrl: "https://example.com/asus-login-demo",
+    repoUrl: "https://github.com/username/asus-login-ui",
+    features: [
+      "Modern ASUS branding",
+      "Minimalist login/signup forms",
+      "Mobile-responsive layout",
+      "Consistent color palette",
+      "Intuitive user flow",
+      "Designed in Figma"
+    ]
   },
 ];
 

@@ -40,16 +40,35 @@ const Home = () => {
       technologies: ["Figma", "UI/UX Design"],
       fullDescription:
         "Designed a minimalistic and user-friendly login and signup interface tailored for ASUS, using Figma. The design emphasizes brand consistency, simplicity, and usability with clean forms, intuitive layout, and mobile responsiveness.",
+      demoUrl: "https://example.com/asus-login-demo",
+      repoUrl: "https://github.com/username/asus-login-ui",
+      features: [
+        "Modern ASUS branding",
+        "Minimalist login/signup forms",
+        "Mobile-responsive layout",
+        "Consistent color palette",
+        "Intuitive user flow",
+        "Designed in Figma"
+      ]
     },
     // ... existing code ...
     {
       id: "3",
-      title: "Documents to Quiz",
-      description: "Turn documents into interactive quizzes for practice and review.",
-      thumbnail: "/Quiz.JPG",
-      technologies: ["React", "JavaScript", "Tailwind CSS"],
-      fullDescription:
-        "Built a web app that converts documents into customizable quizzes for studying and self-assessment. Supports various question types, real-time feedback, and responsive design for seamless use on any device. Ideal for reviewing notes and enhancing retention.",
+      title: "DevHub",
+      description: "🚀 DevHub – Personal Space for Developers\nDevHub is a personal productivity hub built by a developer, for developers. It helps you stay focused by keeping your projects, tasks, notes, and favorite tools in one clean and simple space.",
+      thumbnail: "/devhub.jpg",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Vite"],
+      fullDescription: "DevHub is a personal productivity and collaboration space built for developers, by a developer. It's designed to help manage your learning, tasks, and projects all in one place—clean, focused, and fast.",
+      features: [
+        "Project tracking dashboard",
+        "Personal dev notes section",
+        "To-do list for task management",
+        "Quick-access tools panel",
+        "Clean and minimal UI",
+        "Organized dev workflow"
+      ],
+      demoUrl: "https://devhub-gules.vercel.app",
+      repoUrl: "https://github.com/reinieltalplacido/devhub-personal-space"
     },
     
     {
