@@ -6,7 +6,7 @@ interface Project {
   id: string;
   title: string;
   description: string;
-  thumbnail: string;
+  images: string[];
   technologies: string[];
   fullDescription: string;
   demoUrl?: string;
@@ -42,7 +42,7 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, onImageCl
     >
       <div className="relative overflow-hidden rounded-t-xl bg-white">
         <img
-          src={project.thumbnail}
+          src={project.images?.[0] || ''}
           alt={project.title}
           className="w-full h-40 object-contain transition-transform duration-300"
           loading="lazy"
@@ -79,10 +79,11 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   isDarkMode,
 }) => {
   const [previewProject, setPreviewProject] = useState<Project | null>(null);
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
-  // Prevent background scroll when modal is open
   useEffect(() => {
     if (previewProject) {
+      setCurrentImageIdx(0);
       document.body.classList.add('overflow-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
@@ -98,6 +99,20 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
 
   const closePreview = () => {
     setPreviewProject(null);
+  };
+
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIdx((idx) =>
+      previewProject && idx > 0 ? idx - 1 : (previewProject?.images.length || 1) - 1
+    );
+  };
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIdx((idx) =>
+      previewProject && idx < (previewProject.images.length - 1) ? idx + 1 : 0
+    );
   };
 
   const techIcons: Record<string, JSX.Element> = {
@@ -142,7 +157,6 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             onClick={(e) => e.stopPropagation()}
             tabIndex={-1}
           >
-            {/* Close Button - moved outside image container for better alignment */}
             <button
               className="absolute top-2 right-2 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-xl sm:text-2xl text-white bg-black bg-opacity-40 rounded-full hover:bg-opacity-70 transition leading-none p-0 z-10"
               onClick={closePreview}
@@ -150,17 +164,33 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             >
               <span className="flex items-center justify-center w-full h-full">&times;</span>
             </button>
-            {/* Image */}
-            <div className="w-full bg-[#23263a] flex items-center justify-center rounded-t-2xl overflow-hidden p-0 m-0 flex-shrink-0">
+            <div className="w-full bg-[#23263a] flex items-center justify-center rounded-t-2xl overflow-hidden p-0 m-0 flex-shrink-0 relative">
+              {previewProject.images && previewProject.images.length > 1 && (
+                <>
+                  <button
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center z-10"
+                    onClick={handlePrevImage}
+                    aria-label="Previous image"
+                  >
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                  </button>
+                  <button
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center z-10"
+                    onClick={handleNextImage}
+                    aria-label="Next image"
+                  >
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  </button>
+                </>
+              )}
               <img
-                src={previewProject.thumbnail}
+                src={previewProject.images?.[currentImageIdx] || ''}
                 alt={previewProject.title}
                 className="object-cover w-full h-40 sm:h-56 md:h-64 max-h-64"
                 style={{ borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
                 loading="lazy"
               />
             </div>
-            {/* Content */}
             <div className="p-4 sm:p-8 pb-4 sm:pb-6 flex flex-col gap-3 sm:gap-4 flex-1 overflow-y-auto custom-scrollbar">
               <h2 className="text-2xl sm:text-3xl font-bold mb-1">{previewProject.title}</h2>
               <p className="text-base sm:text-lg text-gray-300 mb-2">{previewProject.description}</p>
@@ -231,8 +261,9 @@ const defaultProjects: Project[] = [
     title: "E-Commerce Platform",
     description:
       "A full-featured online shopping platform with cart and payment integration.",
-    thumbnail:
-      "/Educonnect.JPG",
+    images: [
+      "/Educonnect.JPG"
+    ],
     technologies: ["React", "Node.js", "MongoDB", "Stripe"],
     fullDescription:
       "Built a complete e-commerce solution with user authentication, product catalog, shopping cart, and secure payment processing using Stripe. Implemented responsive design for optimal mobile experience and admin dashboard for inventory management.",
@@ -250,8 +281,9 @@ const defaultProjects: Project[] = [
     title: "Task Management App",
     description:
       "A productivity app for organizing tasks with drag-and-drop functionality.",
-    thumbnail:
-      "/PINAKA HOME PAGE NG PUMA.png",
+    images: [
+      "/PINAKA HOME PAGE NG PUMA.png"
+    ],
     technologies: ["React", "TypeScript", "Firebase", "Tailwind CSS"],
     fullDescription:
       "Developed a task management application featuring drag-and-drop task organization, priority levels, due dates, and real-time synchronization across devices. Implemented user authentication and data persistence with Firebase.",
@@ -262,7 +294,10 @@ const defaultProjects: Project[] = [
     id: "3",
     title: "DevHub",
     description: "🚀 DevHub – Personal Space for Developers\nDevHub is a personal productivity hub built by a developer, for developers. It helps you stay focused by keeping your projects, tasks, notes, and favorite tools in one clean and simple space.",
-    thumbnail: "/Devhub.JPG",
+    images: [
+      "/devhub.jpg",
+      "/dashbord devhub.jpg"
+    ],
     technologies: ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Vite"],
     fullDescription: "DevHub is a personal productivity and collaboration space built for developers, by a developer. It's designed to help manage your learning, tasks, and projects all in one place—clean, focused, and fast.",
     features: [
@@ -280,7 +315,9 @@ const defaultProjects: Project[] = [
     id: "4",
     title: "Countdown Timer",
     description: "A customizable countdown timer for events.",
-    thumbnail: "/CountdownTimer.JPG",
+    images: [
+      "/CountdownTimer.JPG"
+    ],
     technologies: ["React", "JavaScript", "CSS"],
     fullDescription: "Built a countdown timer with adjustable time, alerts, and a clean UI. Perfect for tracking deadlines or events.",
   },
@@ -289,8 +326,9 @@ const defaultProjects: Project[] = [
     title: "Fitness Tracker",
     description:
       "Mobile app for tracking workouts and nutrition with progress visualization.",
-    thumbnail:
-      "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80"
+    ],
     technologies: ["React Native", "Redux", "Node.js", "MongoDB"],
     fullDescription:
       "Developed a mobile fitness application that allows users to track workouts, set goals, monitor nutrition, and visualize progress over time. Implemented features like custom workout plans, calorie tracking, and achievement badges.",
@@ -302,8 +340,9 @@ const defaultProjects: Project[] = [
     title: "AI Image Generator",
     description:
       "Web app that generates unique images using machine learning algorithms.",
-    thumbnail:
-      "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=800&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=800&q=80"
+    ],
     technologies: ["Python", "TensorFlow", "Flask", "React"],
     fullDescription:
       "Created a web application that generates unique images using machine learning algorithms. Users can adjust parameters to influence the style and content of generated images. Implemented with a Python/Flask backend using TensorFlow and a React frontend.",
@@ -314,7 +353,9 @@ const defaultProjects: Project[] = [
     id: "7",
     title: "ASUS Login/Signup UI",
     description: "A clean and modern login/signup interface designed in Figma for ASUS branding.",
-    thumbnail: "/EHYYYY.jpg",
+    images: [
+      "/EHYYYY.jpg"
+    ],
     technologies: ["Figma", "UI/UX Design"],
     fullDescription: "Designed a minimalistic and user-friendly login and signup interface tailored for ASUS, using Figma. The design emphasizes brand consistency, simplicity, and usability with clean forms, intuitive layout, and mobile responsiveness.",
     demoUrl: "https://example.com/asus-login-demo",

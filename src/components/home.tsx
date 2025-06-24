@@ -26,7 +26,7 @@ const Home = () => {
       title: "EduConnect Platform",
       description:
         "A role-based web app for managing courses, students, and communication in an academic setting.",
-      thumbnail: "/Educonnect.JPG",
+      images: ["/Educonnect.JPG"],
       technologies: ["HTML", "CSS", "JavaScript", "Firebase"],
       fullDescription:
         "EduConnect is a role-based education platform that lets teachers manage courses, post announcements, share files, and chat with students in real-time. Built with Firebase for authentication, Firestore for data storage, and responsive UI for a smooth user experience.",
@@ -36,7 +36,7 @@ const Home = () => {
       title: "ASUS Login/Signup UI",
       description:
         "A clean and modern login/signup interface designed in Figma for ASUS branding.",
-      thumbnail: "/iPhone 15 Pro.jpg",
+      images: ["/iPhone 15 Pro.jpg"],
       technologies: ["Figma", "UI/UX Design"],
       fullDescription:
         "Designed a minimalistic and user-friendly login and signup interface tailored for ASUS, using Figma. The design emphasizes brand consistency, simplicity, and usability with clean forms, intuitive layout, and mobile responsiveness.",
@@ -51,12 +51,11 @@ const Home = () => {
         "Designed in Figma"
       ]
     },
-    // ... existing code ...
     {
       id: "3",
       title: "DevHub",
       description: "🚀 DevHub – Personal Space for Developers\nDevHub is a personal productivity hub built by a developer, for developers. It helps you stay focused by keeping your projects, tasks, notes, and favorite tools in one clean and simple space.",
-      thumbnail: "/devhub.jpg",
+      images: ["/devhub.jpg", "/dashbord devhub.jpg"],
       technologies: ["React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Vite"],
       fullDescription: "DevHub is a personal productivity and collaboration space built for developers, by a developer. It's designed to help manage your learning, tasks, and projects all in one place—clean, focused, and fast.",
       features: [
@@ -70,17 +69,15 @@ const Home = () => {
       demoUrl: "https://devhub-gules.vercel.app",
       repoUrl: "https://github.com/reinieltalplacido/devhub-personal-space"
     },
-    
     {
       id: "4",
       title: "Event Countdown Timer",
       description: "Track upcoming events with a live countdown and notifications.",
-      thumbnail: "/CountdownTimer.JPG",
+      images: ["/CountdownTimer.JPG"],
       technologies: ["React", "JavaScript", "CSS"],
       fullDescription:
         "Developed an event countdown timer that lets users add custom events, shows live time remaining, and sends notifications as deadlines approach. Clean, responsive UI makes it easy to manage multiple events across devices.",
     }
-    
   ];
 
   useEffect(() => {
