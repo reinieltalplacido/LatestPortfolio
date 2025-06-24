@@ -147,91 +147,78 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
 
       {previewProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn p-4 sm:p-6"
           onClick={closePreview}
           aria-modal="true"
           role="dialog"
         >
           <div
-            className="relative w-full max-w-4xl md:max-w-4xl max-h-[90vh] bg-[#181c2a] text-white rounded-2xl shadow-2xl border border-neutral-800 mx-2 sm:mx-auto transition-all duration-300 transform animate-scaleIn flex flex-col"
+            className="relative w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] sm:max-h-[85vh] bg-[#181c2a] text-white rounded-xl sm:rounded-2xl shadow-2xl border border-neutral-800 mx-auto transition-all duration-300 transform animate-scaleIn flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
             tabIndex={-1}
           >
             <button
-              className="absolute top-2 right-2 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-xl sm:text-2xl text-white bg-black bg-opacity-40 rounded-full hover:bg-opacity-70 transition leading-none p-0 z-10"
+              className="absolute top-2 right-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-2xl text-white bg-black bg-opacity-40 rounded-full hover:bg-opacity-70 transition leading-none p-0 z-10"
               onClick={closePreview}
               aria-label="Close"
             >
               <span className="flex items-center justify-center w-full h-full">&times;</span>
             </button>
-            <div className="w-full bg-[#23263a] flex items-center justify-center rounded-t-2xl overflow-hidden p-0 m-0 flex-shrink-0 relative">
+            <div className="w-full bg-[#23263a] flex items-center justify-center overflow-hidden p-0 m-0 flex-shrink-0 relative">
               {previewProject.images && previewProject.images.length > 1 && (
                 <>
                   <button
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center z-10"
+                    className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center z-10"
                     onClick={handlePrevImage}
                     aria-label="Previous image"
                   >
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
                   </button>
                   <button
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white rounded-full w-8 h-8 flex items-center justify-center z-10"
+                    className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center z-10"
                     onClick={handleNextImage}
                     aria-label="Next image"
                   >
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                   </button>
                 </>
               )}
               <img
                 src={previewProject.images?.[currentImageIdx] || ''}
                 alt={previewProject.title}
-                className="object-cover w-full h-40 sm:h-56 md:h-64 max-h-64"
-                style={{ borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+                className="object-contain w-full h-48 sm:h-72 md:h-96 lg:h-[28rem] max-h-[28rem] bg-[#23263a] mx-auto"
+                style={{ maxWidth: '100%' }}
                 loading="lazy"
               />
             </div>
-            <div className="p-4 sm:p-8 pb-4 sm:pb-6 flex flex-col gap-3 sm:gap-4 flex-1 overflow-y-auto custom-scrollbar">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-1">{previewProject.title}</h2>
-              <p className="text-base sm:text-lg text-gray-300 mb-2">{previewProject.description}</p>
-              <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">{previewProject.fullDescription}</p>
+            <div className="p-3 sm:p-6 md:p-8 pb-3 sm:pb-6 flex flex-col gap-2 sm:gap-3 md:gap-4 flex-1 overflow-y-auto custom-scrollbar">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">{previewProject.title}</h2>
+              <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-1 sm:mb-2">{previewProject.description}</p>
+              <p className="text-xs sm:text-sm md:text-base text-gray-400 mb-2 sm:mb-3 md:mb-4">{previewProject.fullDescription}</p>
               {previewProject.features && (
-                <div className="mb-4">
-                  <h3 className="font-semibold text-base sm:text-lg mb-3">Key Features</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="mb-2 sm:mb-4">
+                  <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-2 sm:mb-3">Key Features</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {previewProject.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2 bg-[#23263a] rounded-lg px-4 py-3">
+                      <div key={idx} className="flex items-center gap-2 bg-[#23263a] rounded-lg px-3 sm:px-4 py-2 sm:py-3">
                         <span className="text-indigo-400">
-                          <svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20' className='w-5 h-5'><path fillRule='evenodd' d='M16.704 6.29a1 1 0 0 1 .006 1.414l-6.002 6.06a1 1 0 0 1-1.414.006l-3.002-2.96a1 1 0 1 1 1.408-1.42l2.294 2.263 5.295-5.345a1 1 0 0 1 1.415-.018z' clipRule='evenodd'/></svg>
+                          <svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20' className='w-4 h-4 sm:w-5 sm:h-5'><path fillRule='evenodd' d='M16.704 6.29a1 1 0 0 1 .006 1.414l-6.002 6.06a1 1 0 0 1-1.414.006l-3.002-2.96a1 1 0 1 1 1.408-1.42l2.294 2.263 5.295-5.345a1 1 0 0 1 1.415-.018z' clipRule='evenodd'/></svg>
                         </span>
-                        <span className="text-sm text-white">{feature}</span>
+                        <span className="text-xs sm:text-sm text-white">{feature}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-              <div>
-                <h3 className="font-semibold text-base sm:text-lg mb-2">Technologies</h3>
-                <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
-                  {previewProject.technologies.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md flex items-center gap-1 border border-primary/20"
-                    >
-                      {techIcons[tech] || null}{tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="flex gap-3 sm:gap-4 mt-2">
+              <div className="flex flex-wrap gap-2 sm:gap-3 mt-1 sm:mt-2">
                 {previewProject.demoUrl && (
                   <a
                     href={previewProject.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow hover:from-indigo-600 hover:to-purple-600 transition text-sm border-none outline-none"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow hover:from-indigo-600 hover:to-purple-600 transition text-xs sm:text-sm border-none outline-none"
                   >
-                    <FaRocket className="text-base" />
+                    <FaRocket className="text-xs sm:text-base" />
                     View Live Demo
                   </a>
                 )}
@@ -240,9 +227,9 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
                     href={previewProject.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-indigo-400 text-indigo-400 font-semibold hover:bg-indigo-400 hover:text-white transition text-sm bg-transparent"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-indigo-400 text-indigo-400 font-semibold hover:bg-indigo-400 hover:text-white transition text-xs sm:text-sm bg-transparent"
                   >
-                    <FaFolderOpen className="text-base" />
+                    <FaFolderOpen className="text-xs sm:text-base" />
                     View Source Code
                   </a>
                 )}
@@ -268,13 +255,15 @@ const defaultProjects: Project[] = [
     fullDescription:
       "Built a complete e-commerce solution with user authentication, product catalog, shopping cart, and secure payment processing using Stripe. Implemented responsive design for optimal mobile experience and admin dashboard for inventory management.",
     features: [
-      "Role-based access control (Teachers/Students)",
-      "Real-time messaging and announcements",
-      "Course management and file sharing",
-      "Secure Firebase authentication",
-      "Cloud-based data storage with Firestore",
-      "Mobile-responsive design"
-    ]
+      "Quiz Builder: Timed, auto-graded quizzes",
+      "Announcements: Real-time updates",
+      "Assignment Uploads: Submit by course",
+      "File Repository: Centralized materials",
+      "Progress Dashboard: Track scores & tasks",
+      "Course Chat: Group messaging"
+    ],
+    demoUrl: "https://educonnect-f70d6.web.app",
+    repoUrl: "https://github.com/reinieltalplacido/Educonnect"
   },
   {
     id: "2",
