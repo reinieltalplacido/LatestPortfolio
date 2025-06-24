@@ -10,7 +10,7 @@ interface TerminalProps {
     id: string;
     title: string;
     description: string;
-    thumbnail: string;
+    images: string[];
     technologies: string[];
     fullDescription: string;
   }[];

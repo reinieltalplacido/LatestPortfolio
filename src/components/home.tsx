@@ -30,6 +30,16 @@ const Home = () => {
       technologies: ["HTML", "CSS", "JavaScript", "Firebase"],
       fullDescription:
         "EduConnect is a role-based education platform that lets teachers manage courses, post announcements, share files, and chat with students in real-time. Built with Firebase for authentication, Firestore for data storage, and responsive UI for a smooth user experience.",
+      features: [
+        "Quiz Builder: Timed, auto-graded quizzes",
+        "Announcements: Real-time updates",
+        "Assignment Uploads: Submit by course",
+        "File Repository: Centralized materials",
+        "Progress Dashboard: Track scores & tasks",
+        "Course Chat: Group messaging"
+      ],
+      demoUrl: "https://educonnect-f70d6.web.app",
+      repoUrl: "https://github.com/reinieltalplacido/Educonnect"
     },
     {
       id: "2",
