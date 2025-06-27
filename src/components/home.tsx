@@ -261,6 +261,20 @@ const Home = () => {
                 </div>
               </form>
 
+              {/* GitHub Profile Button */}
+              <div className="flex justify-center mt-4">
+                <a
+                  href="https://github.com/reinieltalplacido"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-muted text-foreground rounded-md shadow hover:bg-accent transition-colors border border-border"
+                  aria-label="GitHub Profile"
+                >
+                  <Github className="w-5 h-5" />
+                  <span>GitHub</span>
+                </a>
+              </div>
+
             
             </div>
           </section>

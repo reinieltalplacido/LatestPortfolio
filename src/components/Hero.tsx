@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Mail, FileText } from "lucide-react";
+import { Mail, FileText, Github } from "lucide-react";
 import { FaReact, FaBootstrap } from "react-icons/fa";
 import { SiTailwindcss, SiFigma, SiHtml5, SiCss3, SiJavascript, SiTypescript } from "react-icons/si";
+import gsap from "gsap";
 
 interface HeroProps {
   name?: string;
@@ -25,6 +26,7 @@ const Hero = ({
   availability = true,
 }: HeroProps) => {
   const [currentTime, setCurrentTime] = useState(time);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const skillIcons: Record<string, JSX.Element> = {
     HTML: <SiHtml5 color="#E34F26" className="inline mr-1" />,
@@ -58,8 +60,19 @@ const Hero = ({
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (sectionRef.current) {
+      gsap.fromTo(
+        sectionRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1 }
+      );
+    }
+  }, []);
+
   return (
-    <section className="py-12 w-full max-w-3xl mx-auto text-center md:text-left">
+    <section ref={sectionRef} className="py-12 w-full max-w-3xl mx-auto text-center md:text-left">
       <h1 className="text-4xl md:text-5xl font-bold mb-4">{name}</h1>
       <p className="text-xl mb-6 text-muted-foreground">{title}</p>
       <p className="mb-6 max-w-2xl">{description}</p>
@@ -88,6 +101,16 @@ const Hero = ({
           <Button variant="default" size="sm">
             <Mail className="mr-2 h-4 w-4" />
             Reach Me
+          </Button>
+        </a>
+        <a
+          href="https://github.com/reinieltalplacido"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="outline" size="sm" className="flex items-center">
+            <Github className="mr-2 h-4 w-4" />
+            GitHub
           </Button>
         </a>
       </div>
