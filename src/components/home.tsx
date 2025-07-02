@@ -151,7 +151,7 @@ const Home = () => {
               <Terminal isDarkMode={isDarkMode} projects={projects} />
             </div>
             <p className="text-sm text-center mt-2 text-muted-foreground">
-              Try typing 'help', 'view projects', or 'goto about' in the terminal
+              Try typing 'help' in the terminal. 
             </p>
           </section>
 
@@ -159,10 +159,10 @@ const Home = () => {
           <section id="contact" className="mb-16 max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold mb-6">Reach me</h2>
             <div className="p-6 rounded-lg bg-card shadow-lg">
-              <p className="mb-6">
-                I'm always open to new opportunities and collaborations. Feel free
-                to reach out!
-              </p>
+            <p className="mb-6">
+  Whether it's building something awesome or just exchanging ideas—I'm always down to connect. Drop me a message anytime!
+</p>
+
 
               <form
                 className="space-y-4 mb-6"
