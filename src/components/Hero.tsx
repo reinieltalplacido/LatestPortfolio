@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Mail, FileText, Github } from "lucide-react";
-import { FaReact, FaBootstrap } from "react-icons/fa";
-import { SiTailwindcss, SiFigma, SiHtml5, SiCss3, SiJavascript, SiTypescript } from "react-icons/si";
+import { FaReact, FaBootstrap, FaGithub, FaGitAlt } from "react-icons/fa";
+import { SiTailwindcss, SiHtml5, SiCss3, SiJavascript, SiTypescript, SiCplusplus, SiNextdotjs, SiPhp, SiMysql } from "react-icons/si";
 import gsap from "gsap";
 
 interface HeroProps {
@@ -20,7 +20,7 @@ const Hero = ({
   name = "Reiniel Anjelo T. Talplacido",
   title = "Web Developer/Designer",
   description,
-  skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Tailwind CSS", "Bootstrap", "Figma"],
+  skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Tailwind CSS", "Bootstrap", "C++", "Next.js", "PHP", "SQL", "Git", "GitHub"],
   location = "Philippines",
   time = "11:28 AM",
   availability = true,
@@ -36,7 +36,12 @@ const Hero = ({
     React: <FaReact color="#61DAFB" className="inline mr-1" />,
     "Tailwind CSS": <SiTailwindcss color="#06B6D4" className="inline mr-1" />,
     Bootstrap: <FaBootstrap color="#7952B3" className="inline mr-1" />,
-    Figma: <SiFigma color="#F24E1E" className="inline mr-1" />,
+    "C++": <SiCplusplus color="#00599C" className="inline mr-1" />,
+    "Next.js": <SiNextdotjs color="#FFFFFF" className="inline mr-1" />,
+    PHP: <SiPhp color="#777BB4" className="inline mr-1" />,
+    SQL: <SiMysql color="#4479A1" className="inline mr-1" />,
+    Git: <FaGitAlt color="#F05032" className="inline mr-1" />,
+    GitHub: <FaGithub color="#181717" className="inline mr-1" />,
   };
 
   useEffect(() => {
