@@ -37,7 +37,7 @@ const Hero = ({
     "Tailwind CSS": <SiTailwindcss color="#06B6D4" className="inline mr-1" />,
     Bootstrap: <FaBootstrap color="#7952B3" className="inline mr-1" />,
     "C++": <SiCplusplus color="#00599C" className="inline mr-1" />,
-    "Next.js": <SiNextdotjs color="#FFFFFF" className="inline mr-1" />,
+    "Next.js": <SiNextdotjs className="inline mr-1" color="currentColor" />,
     PHP: <SiPhp color="#777BB4" className="inline mr-1" />,
     SQL: <SiMysql color="#4479A1" className="inline mr-1" />,
     Git: <FaGitAlt color="#F05032" className="inline mr-1" />,
@@ -83,7 +83,7 @@ const Hero = ({
       <p className="mb-6 max-w-2xl text-left">{description}</p>
       <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
         {skills.map((skill, index) => (
-          <Badge key={index} variant="secondary" className="text-xs flex items-center gap-1">
+          <Badge key={index} variant="clear" className="text-xs flex items-center gap-1">
             {skillIcons[skill] || null}{skill}
           </Badge>
         ))}
