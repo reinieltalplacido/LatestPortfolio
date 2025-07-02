@@ -19,7 +19,7 @@ interface HeroProps {
 const Hero = ({
   name = "Reiniel Anjelo T. Talplacido",
   title = "Web Developer/Designer",
- description = "Currently a 3rd-year IT student who designs in Figma and develops modern, responsive websites using HTML, CSS, React, and Tailwind CSS.",
+  description,
   skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Tailwind CSS", "Bootstrap", "Figma"],
   location = "Philippines",
   time = "11:28 AM",
@@ -72,23 +72,10 @@ const Hero = ({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-12 w-full max-w-3xl mx-auto text-center md:text-left">
+    <section ref={sectionRef} className="py-12 w-full max-w-3xl mx-auto text-left">
       <h1 className="text-4xl md:text-5xl font-bold mb-4">{name}</h1>
       <p className="text-xl mb-6 text-muted-foreground">{title}</p>
-      <p className="mb-6 max-w-2xl">{description}</p>
-      <p className="mb-2">
-        Currently focused on personal projects and growing as a solo developer, while occasionally freelancing and learning new tools.
-      </p>
-      <div className="flex items-center justify-center md:justify-start space-x-2 mb-6 mt-4">
-        <span
-          className={`inline-block w-2 h-2 rounded-full ${availability ? "bg-green-500" : "bg-gray-400"}`}
-        ></span>
-        <span className="text-sm">
-          {availability
-            ? "Available for new challenges"
-            : "Currently unavailable"}
-        </span>
-      </div>
+      <p className="mb-6 max-w-2xl text-left">{description}</p>
       <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
         {skills.map((skill, index) => (
           <Badge key={index} variant="secondary" className="text-xs flex items-center gap-1">

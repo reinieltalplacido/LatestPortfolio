@@ -132,16 +132,7 @@ const Home = () => {
             <h2 className="text-2xl font-bold mb-6">About Me</h2>
             <div className="p-6 rounded-lg bg-card shadow-lg">
               <p className="mb-4">
-                Hi there! I'm a 3rd-year IT student from NEUST focused on
-                front-end web development and UI design. I enjoy building
-                responsive, user-friendly websites using React, Tailwind CSS, and
-                modern JavaScript tools.
-              </p>
-              <p className="mb-4">
-                My journey into tech began when I discovered how exciting it was
-                to design in Figma and bring those ideas to life through code.
-                Since then, I've been working on school projects, practicing on my
-                own, and sharpening my skills one build at a time.
+                I'm a 3rd-year IT student from NEUST focused on front-end development while actively learning the backend to grow as a full-stack developer. I build clean, responsive websites and turn ideas into functional, user-friendly experiences through code and continuous practice.
               </p>
             </div>
           </section>
@@ -260,20 +251,6 @@ const Home = () => {
                   </Button>
                 </div>
               </form>
-
-              {/* GitHub Profile Button */}
-              <div className="flex justify-center mt-4">
-                <a
-                  href="https://github.com/reinieltalplacido"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-muted text-foreground rounded-md shadow hover:bg-accent transition-colors border border-border"
-                  aria-label="GitHub Profile"
-                >
-                  <Github className="w-5 h-5" />
-                  <span>GitHub</span>
-                </a>
-              </div>
 
             
             </div>

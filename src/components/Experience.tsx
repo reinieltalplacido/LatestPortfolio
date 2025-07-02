@@ -55,7 +55,7 @@ const Experience = ({ experiences = [] }: ExperienceProps) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center text-center text-muted-foreground mt-12 space-y-4"
+          className="flex flex-col items-center text-left md:text-center text-muted-foreground mt-12 space-y-4"
         >
           <AlertTriangle className="w-10 h-10 text-yellow-400" />
           <h3 className="text-lg font-semibold">404 - Experience Not Found</h3>
