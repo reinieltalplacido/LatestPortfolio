@@ -267,20 +267,6 @@ const defaultProjects: Project[] = [
   },
   {
     id: "2",
-    title: "Task Management App",
-    description:
-      "A productivity app for organizing tasks with drag-and-drop functionality.",
-    images: [
-      "/PINAKA HOME PAGE NG PUMA.png"
-    ],
-    technologies: ["React", "TypeScript", "Firebase", "Tailwind CSS"],
-    fullDescription:
-      "Developed a task management application featuring drag-and-drop task organization, priority levels, due dates, and real-time synchronization across devices. Implemented user authentication and data persistence with Firebase.",
-    demoUrl: "https://example.com/taskapp-demo",
-    repoUrl: "https://github.com/username/task-management-app",
-  },
-  {
-    id: "3",
     title: "DevHub",
     description: "🚀 DevHub – Personal Space for Developers\nDevHub is a personal productivity hub built by a developer, for developers. It helps you stay focused by keeping your projects, tasks, notes, and favorite tools in one clean and simple space.",
     images: [
@@ -301,7 +287,7 @@ const defaultProjects: Project[] = [
     repoUrl: "https://github.com/reinieltalplacido/devhub-personal-space"
   },
   {
-    id: "4",
+    id: "3",
     title: "Countdown Timer",
     description: "A customizable countdown timer for events.",
     images: [
@@ -311,35 +297,7 @@ const defaultProjects: Project[] = [
     fullDescription: "Built a countdown timer with adjustable time, alerts, and a clean UI. Perfect for tracking deadlines or events.",
   },
   {
-    id: "5",
-    title: "Fitness Tracker",
-    description:
-      "Mobile app for tracking workouts and nutrition with progress visualization.",
-    images: [
-      "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80"
-    ],
-    technologies: ["React Native", "Redux", "Node.js", "MongoDB"],
-    fullDescription:
-      "Developed a mobile fitness application that allows users to track workouts, set goals, monitor nutrition, and visualize progress over time. Implemented features like custom workout plans, calorie tracking, and achievement badges.",
-    demoUrl: "https://example.com/fitness-demo",
-    repoUrl: "https://github.com/username/fitness-tracker",
-  },
-  {
-    id: "6",
-    title: "AI Image Generator",
-    description:
-      "Web app that generates unique images using machine learning algorithms.",
-    images: [
-      "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=800&q=80"
-    ],
-    technologies: ["Python", "TensorFlow", "Flask", "React"],
-    fullDescription:
-      "Created a web application that generates unique images using machine learning algorithms. Users can adjust parameters to influence the style and content of generated images. Implemented with a Python/Flask backend using TensorFlow and a React frontend.",
-    demoUrl: "https://example.com/ai-image-demo",
-    repoUrl: "https://github.com/username/ai-image-generator",
-  },
-  {
-    id: "7",
+    id: "4",
     title: "ASUS Login/Signup UI",
     description: "A clean and modern login/signup interface designed in Figma for ASUS branding.",
     images: [

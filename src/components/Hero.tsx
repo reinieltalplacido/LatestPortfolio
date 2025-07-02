@@ -39,9 +39,9 @@ const Hero = ({
     "C++": <SiCplusplus color="#00599C" className="inline mr-1" />,
     "Next.js": <SiNextdotjs className="inline mr-1" color="currentColor" />,
     PHP: <SiPhp color="#777BB4" className="inline mr-1" />,
-    SQL: <SiMysql color="#4479A1" className="inline mr-1" />,
+    SQL: <SiMysql className="inline mr-1" color="currentColor" />,
     Git: <FaGitAlt color="#F05032" className="inline mr-1" />,
-    GitHub: <FaGithub color="#181717" className="inline mr-1" />,
+    GitHub: <FaGithub className="inline mr-1" color="currentColor" />,
   };
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const Hero = ({
           </Badge>
         ))}
       </div>
-      <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 mb-6">
+      <div className="flex flex-row items-center justify-center md:justify-start gap-3 mb-6">
         <a href="#contact">
           <Button variant="default" size="sm">
             <Mail className="mr-2 h-4 w-4" />
