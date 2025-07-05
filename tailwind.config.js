@@ -77,7 +77,7 @@ module.exports = {
         "fade-in": "fade-in 0.5s ease-out",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        sans: ["Geist Sans", "ui-sans-serif", "system-ui"],
       },
     },
   },
