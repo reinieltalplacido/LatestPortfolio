@@ -25,7 +25,6 @@ const Hero = ({
   time = "11:28 AM",
   availability = true,
 }: HeroProps) => {
-  const [currentTime, setCurrentTime] = useState(time);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const skillIcons: Record<string, JSX.Element> = {
@@ -43,28 +42,6 @@ const Hero = ({
     Git: <FaGitAlt color="#F05032" className="inline mr-1" />,
     GitHub: <FaGithub className="inline mr-1" color="currentColor" />,
   };
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      // Format time for Philippines timezone (Asia/Manila)
-      const options = {
-        hour: "numeric" as "numeric" | "2-digit",
-        minute: "numeric" as "numeric" | "2-digit",
-        hour12: true,
-        timeZone: "Asia/Manila",
-      };
-      setCurrentTime(now.toLocaleTimeString("en-US", options));
-    };
-
-    // Update time immediately
-    updateTime();
-
-    // Update time every minute
-    const interval = setInterval(updateTime, 60000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -106,9 +83,6 @@ const Hero = ({
           </Button>
         </a>
       </div>
-      <p className="text-sm text-muted-foreground">
-        {location}, local time: {currentTime}
-      </p>
     </section>
   );
 };
