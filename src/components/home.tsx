@@ -130,7 +130,7 @@ const Home = () => {
           {/* Terminal Section */}
           <section id="about" className="mb-16 max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold mb-6">About Me</h2>
-            <div className="p-6 rounded-lg bg-card shadow-lg">
+            <div className="p-6 rounded-lg bg-card">
               <p className="mb-4">
                 I'm a 3rd-year IT student from NEUST focused on front-end development while actively learning the backend to grow as a full-stack developer. I build clean, responsive websites and turn ideas into functional, user-friendly experiences through code and continuous practice.
               </p>
@@ -158,7 +158,7 @@ const Home = () => {
           {/* Contact Section */}
           <section id="contact" className="mb-16 max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold mb-6">Reach me</h2>
-            <div className="p-6 rounded-lg bg-card shadow-lg">
+            <div className="p-6 rounded-lg bg-card">
             <p className="mb-6">
   Whether it's building something awesome or just exchanging ideas—I'm always down to connect. Drop me a message anytime!
 </p>
