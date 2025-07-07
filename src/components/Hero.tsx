@@ -87,29 +87,17 @@ const Hero = ({
             GitHub
           </Button>
         </a>
-        <button
-          onClick={() => setExpanded((prev) => !prev)}
-          className={`flex items-center gap-2 border border-border rounded px-4 py-1 bg-white text-black dark:bg-black dark:text-white transition-all duration-300 overflow-hidden relative text-base font-semibold ${expanded ? "w-56" : "w-28"}`}
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2 transition-all duration-300 overflow-hidden relative text-base"
           style={{ minWidth: "7rem" }}
         >
           <Mail className="h-4 w-4" />
-          <span
-            className={`transition-all duration-200 ${expanded ? "opacity-0 w-0" : "opacity-100 w-auto"}`}
-            style={{ whiteSpace: "nowrap", overflow: "hidden" }}
-          >
-            Reach Me
+          <span className="text-sm" style={{ whiteSpace: "nowrap", overflow: "hidden" }}>
+            reinieltalplacido529@gmail.com
           </span>
-          <span
-            className={`flex items-center transition-all duration-300 ${expanded ? "opacity-100 w-auto ml-2" : "opacity-0 w-0 ml-0"}`}
-            style={{ whiteSpace: "nowrap", overflow: "hidden" }}
-          >
-            <span className="mr-2">{email}</span>
-            <Clipboard
-              className="w-4 h-4 cursor-pointer hover:text-primary"
-              onClick={handleCopy}
-            />
-          </span>
-        </button>
+        </Button>
       </div>
     </section>
   );
