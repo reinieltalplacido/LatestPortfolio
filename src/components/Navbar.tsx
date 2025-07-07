@@ -30,7 +30,7 @@ const Navbar = ({ isDarkMode, toggleTheme }: NavbarProps) => {
   }, [mobileOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full max-w-4xl mx-auto bg-black shadow-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full max-w-4xl mx-auto bg-background dark:bg-black">
       <div className="flex justify-between items-center py-6 px-4 md:px-0">
         <div className="flex items-center"></div>
         {/* Desktop nav */}
@@ -70,7 +70,7 @@ const Navbar = ({ isDarkMode, toggleTheme }: NavbarProps) => {
       </div>
       {/* Mobile side drawer with animated menu */}
       <div
-        className={`fixed inset-0 z-40 bg-black/70 transition-opacity duration-300 ${mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-40 bg-black/30 dark:bg-black/70 transition-opacity duration-300 ${mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={() => setMobileOpen(false)}
         aria-label="Close mobile menu overlay"
       />
