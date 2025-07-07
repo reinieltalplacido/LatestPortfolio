@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MoonIcon, SunIcon, Home, User, Settings, Mail, Phone, Menu, X } from "lucide-react";
+import { MoonIcon, SunIcon, Home, User, Settings, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface NavbarProps {
@@ -11,7 +11,6 @@ const menuItems = [
   { icon: Home, label: "Home", href: "#" },
   { icon: User, label: "About", href: "#about" },
   { icon: Settings, label: "Projects", href: "#projects" },
-  { icon: Mail, label: "Reach Me", href: "#contact" },
 ];
 
 const Navbar = ({ isDarkMode, toggleTheme }: NavbarProps) => {

@@ -18,7 +18,7 @@ const Experience = ({ experiences = [] }: ExperienceProps) => {
   const hasExperience = experiences.length > 0;
 
   return (
-    <section className="py-12 w-full max-w-3xl mx-auto">
+    <section className="py-12 w-full max-w-3xl mx-auto bg-background text-foreground transition-colors duration-300">
       <h2 className="text-2xl font-bold mb-6">Experience</h2>
 
       {hasExperience ? (

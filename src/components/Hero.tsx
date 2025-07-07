@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Mail, FileText, Github } from "lucide-react";
+import { Mail, FileText, Github, Clipboard } from "lucide-react";
 import { FaReact, FaBootstrap, FaGithub, FaGitAlt } from "react-icons/fa";
 import { SiTailwindcss, SiHtml5, SiCss3, SiJavascript, SiTypescript, SiCplusplus, SiNextdotjs, SiPhp, SiMysql } from "react-icons/si";
 import gsap from "gsap";
+import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
+import { useToast } from "./ui/use-toast";
 
 interface HeroProps {
   name?: string;
@@ -26,6 +28,9 @@ const Hero = ({
   availability = true,
 }: HeroProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const email = "your.email@example.com";
+  const { toast } = useToast();
 
   const skillIcons: Record<string, JSX.Element> = {
     HTML: <SiHtml5 color="#E34F26" className="inline mr-1" />,
@@ -43,6 +48,12 @@ const Hero = ({
     GitHub: <FaGithub className="inline mr-1" color="currentColor" />,
   };
 
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(email);
+    toast({ title: "Copied!", description: "Email address copied to clipboard." });
+  };
+
   useEffect(() => {
     if (sectionRef.current) {
       gsap.fromTo(
@@ -54,7 +65,7 @@ const Hero = ({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-12 w-full max-w-3xl mx-auto text-left">
+    <section ref={sectionRef} className="py-12 w-full max-w-3xl mx-auto text-left bg-background text-foreground transition-colors duration-300">
       <h1 className="text-4xl md:text-5xl font-bold mb-4">{name}</h1>
       <p className="text-xl mb-6 text-muted-foreground">{title}</p>
       <p className="mb-6 max-w-2xl text-left">{description}</p>
@@ -66,12 +77,6 @@ const Hero = ({
         ))}
       </div>
       <div className="flex flex-row items-center justify-center md:justify-start gap-3 mb-6">
-        <a href="#contact">
-          <Button variant="default" size="sm">
-            <Mail className="mr-2 h-4 w-4" />
-            Reach Me
-          </Button>
-        </a>
         <a
           href="https://github.com/reinieltalplacido"
           target="_blank"
@@ -82,6 +87,29 @@ const Hero = ({
             GitHub
           </Button>
         </a>
+        <button
+          onClick={() => setExpanded((prev) => !prev)}
+          className={`flex items-center gap-2 border border-border rounded px-4 py-1 bg-white text-black dark:bg-black dark:text-white transition-all duration-300 overflow-hidden relative text-base font-semibold ${expanded ? "w-56" : "w-28"}`}
+          style={{ minWidth: "7rem" }}
+        >
+          <Mail className="h-4 w-4" />
+          <span
+            className={`transition-all duration-200 ${expanded ? "opacity-0 w-0" : "opacity-100 w-auto"}`}
+            style={{ whiteSpace: "nowrap", overflow: "hidden" }}
+          >
+            Reach Me
+          </span>
+          <span
+            className={`flex items-center transition-all duration-300 ${expanded ? "opacity-100 w-auto ml-2" : "opacity-0 w-0 ml-0"}`}
+            style={{ whiteSpace: "nowrap", overflow: "hidden" }}
+          >
+            <span className="mr-2">{email}</span>
+            <Clipboard
+              className="w-4 h-4 cursor-pointer hover:text-primary"
+              onClick={handleCopy}
+            />
+          </span>
+        </button>
       </div>
     </section>
   );
