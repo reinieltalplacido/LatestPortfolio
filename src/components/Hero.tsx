@@ -7,6 +7,7 @@ import { SiTailwindcss, SiHtml5, SiCss3, SiJavascript, SiTypescript, SiCplusplus
 import gsap from "gsap";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { useToast } from "./ui/use-toast";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface HeroProps {
   name?: string;
@@ -31,6 +32,11 @@ const Hero = ({
   const [expanded, setExpanded] = useState(false);
   const email = "your.email@example.com";
   const { toast } = useToast();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
 
   const skillIcons: Record<string, JSX.Element> = {
     HTML: <SiHtml5 color="#E34F26" className="inline mr-1" />,
@@ -54,6 +60,8 @@ const Hero = ({
     toast({ title: "Copied!", description: "Email address copied to clipboard." });
   };
 
+  gsap.registerPlugin(ScrollTrigger);
+
   useEffect(() => {
     if (sectionRef.current) {
       gsap.fromTo(
@@ -62,21 +70,75 @@ const Hero = ({
         { opacity: 1, y: 0, duration: 1 }
       );
     }
+    if (headingRef.current) {
+      gsap.fromTo(
+        headingRef.current,
+        { opacity: 0, scale: 0.9, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.8, delay: 0.1, ease: "back.out(1.7)" }
+      );
+    }
+    if (subtitleRef.current) {
+      gsap.fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, delay: 0.3 }
+      );
+    }
+    if (descRef.current) {
+      gsap.fromTo(
+        descRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, delay: 0.5 }
+      );
+    }
+    if (skillsRef.current) {
+      gsap.fromTo(
+        skillsRef.current.children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: skillsRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    }
+    if (buttonsRef.current) {
+      gsap.fromTo(
+        buttonsRef.current.children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: buttonsRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }
+    return;
   }, []);
 
   return (
     <section ref={sectionRef} className="py-12 w-full max-w-3xl mx-auto text-left bg-background text-foreground transition-colors duration-300">
-      <h1 className="text-4xl md:text-5xl font-bold mb-4">{name}</h1>
-      <p className="text-xl mb-6 text-muted-foreground">{title}</p>
-      <p className="mb-6 max-w-2xl text-left">{description}</p>
-      <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
+      <h1 ref={headingRef} className="text-4xl md:text-5xl font-bold mb-4">{name}</h1>
+      <p ref={subtitleRef} className="text-xl mb-6 text-muted-foreground">{title}</p>
+      <p ref={descRef} className="mb-6 max-w-2xl text-left">{description}</p>
+      <div ref={skillsRef} className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
         {skills.map((skill, index) => (
           <Badge key={index} variant="clear" className="text-xs flex items-center gap-1">
             {skillIcons[skill] || null}{skill}
           </Badge>
         ))}
       </div>
-      <div className="flex flex-row items-center justify-center md:justify-start gap-3 mb-6">
+      <div ref={buttonsRef} className="flex flex-row items-center justify-center md:justify-start gap-3 mb-6">
         <a
           href="https://github.com/reinieltalplacido"
           target="_blank"

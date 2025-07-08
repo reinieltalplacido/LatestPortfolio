@@ -10,6 +10,8 @@ import emailjs from '@emailjs/browser';
 import { useToast } from "./ui/use-toast";
 import { Toaster } from "./ui/toaster";
 import { inject } from "@vercel/analytics";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 emailjs.init("3uTEW4Zev2niJ39DB"); // Replace with your Public Key
 
@@ -18,6 +20,9 @@ const Home = () => {
   const [mounted, setMounted] = useState(false);
   const { toast } = useToast();
   const [isSending, setIsSending] = useState(false);
+  const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const aboutHeadingRef = useRef<HTMLHeadingElement>(null);
+  const aboutBoxRef = useRef<HTMLDivElement>(null);
 
   // Mock data for projects
   const projects = [
@@ -102,6 +107,25 @@ const Home = () => {
     }
     // Inject Vercel Analytics
     inject();
+
+    gsap.registerPlugin(ScrollTrigger);
+    // About Me and Experience section animation (single style)
+    if (aboutSectionRef.current) {
+      gsap.fromTo(
+        aboutSectionRef.current,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.3,
+          scrollTrigger: {
+            trigger: aboutSectionRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -126,16 +150,6 @@ const Home = () => {
           <div className="animate-fade-in" autoFocus>
             <Hero />
           </div>
-
-          {/* Terminal Section */}
-          <section id="about" className="mb-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">About Me</h2>
-            <div className="p-6 rounded-lg bg-card">
-              <p className="mb-4">
-                I'm a 3rd-year IT student from NEUST focused on front-end development while actively learning the backend to grow as a full-stack developer. I build clean, responsive websites and turn ideas into functional, user-friendly experiences through code and continuous practice.
-              </p>
-            </div>
-          </section>
 
           {/* Experience Section */}
           <Experience />
