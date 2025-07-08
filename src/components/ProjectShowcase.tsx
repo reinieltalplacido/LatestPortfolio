@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaReact, FaNodeJs, FaBootstrap, FaPencilRuler, FaRocket, FaFolderOpen } from "react-icons/fa";
 import { SiMongodb, SiTypescript, SiTailwindcss, SiJavascript, SiCss3, SiFigma, SiHtml5, SiFirebase } from "react-icons/si";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Project {
   id: string;
@@ -36,8 +37,10 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, onImageCl
   };
 
   return (
-    <div
-      className="rounded-xl border bg-card text-card-foreground shadow transition-all duration-300 flex flex-col h-full cursor-pointer hover:scale-[1.02]"
+    <motion.div
+      whileHover={{ scale: 1.035, y: -6, boxShadow: '0 8px 32px 0 rgba(80,80,180,0.10), 0 1.5px 8px 0 rgba(80,80,180,0.08)' }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="rounded-xl border bg-card text-card-foreground shadow transition-all duration-300 flex flex-col h-full cursor-pointer"
       onClick={() => onImageClick(project)}
     >
       <div className="relative overflow-hidden rounded-t-xl bg-card">
@@ -65,7 +68,7 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, onImageCl
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 });
 
@@ -145,99 +148,109 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         </div>
       </div>
 
-      {previewProject && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn p-4 sm:p-6"
-          onClick={closePreview}
-          aria-modal="true"
-          role="dialog"
-        >
-          <div
-            className="relative w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] sm:max-h-[85vh] bg-card text-card-foreground rounded-xl sm:rounded-2xl shadow-2xl border border-border mx-auto transition-all duration-300 transform animate-scaleIn flex flex-col overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-            tabIndex={-1}
+      <AnimatePresence>
+        {previewProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 sm:p-6"
+            onClick={closePreview}
+            aria-modal="true"
+            role="dialog"
           >
-            <button
-              className="absolute top-2 right-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-2xl text-card-foreground bg-muted bg-opacity-40 rounded-full hover:bg-opacity-70 transition leading-none p-0 z-10"
-              onClick={closePreview}
-              aria-label="Close"
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="relative w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] sm:max-h-[85vh] bg-card text-card-foreground rounded-xl sm:rounded-2xl shadow-2xl border border-border mx-auto flex flex-col overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+              tabIndex={-1}
             >
-              <span className="flex items-center justify-center w-full h-full">&times;</span>
-            </button>
-            <div className="w-full bg-muted flex items-center justify-center overflow-hidden p-0 m-0 flex-shrink-0 relative">
-              {previewProject.images && previewProject.images.length > 1 && (
-                <>
-                  <button
-                    className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 bg-muted bg-opacity-40 hover:bg-opacity-70 text-card-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center z-10"
-                    onClick={handlePrevImage}
-                    aria-label="Previous image"
-                  >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                  </button>
-                  <button
-                    className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 bg-muted bg-opacity-40 hover:bg-opacity-70 text-card-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center z-10"
-                    onClick={handleNextImage}
-                    aria-label="Next image"
-                  >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                  </button>
-                </>
-              )}
-              <img
-                src={previewProject.images?.[currentImageIdx] || ''}
-                alt={previewProject.title}
-                className="object-contain w-full h-48 sm:h-72 md:h-96 lg:h-[28rem] max-h-[28rem] bg-card mx-auto"
-                style={{ maxWidth: '100%' }}
-                loading="lazy"
-              />
-            </div>
-            <div className="p-3 sm:p-6 md:p-8 pb-3 sm:pb-6 flex flex-col gap-2 sm:gap-3 md:gap-4 flex-1 overflow-y-auto custom-scrollbar">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">{previewProject.title}</h2>
-              <p className="text-sm sm:text-base md:text-lg text-foreground mb-1 sm:mb-2">{previewProject.description}</p>
-              <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-2 sm:mb-3 md:mb-4">{previewProject.fullDescription}</p>
-              {previewProject.features && (
-                <div className="mb-2 sm:mb-4">
-                  <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-2 sm:mb-3">Key Features</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {previewProject.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2 bg-card rounded-lg px-3 sm:px-4 py-2 sm:py-3">
-                        <span className="text-indigo-400">
-                          <svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20' className='w-4 h-4 sm:w-5 sm:h-5'><path fillRule='evenodd' d='M16.704 6.29a1 1 0 0 1 .006 1.414l-6.002 6.06a1 1 0 0 1-1.414.006l-3.002-2.96a1 1 0 1 1 1.408-1.42l2.294 2.263 5.295-5.345a1 1 0 0 1 1.415-.018z' clipRule='evenodd'/></svg>
-                        </span>
-                        <span className="text-xs sm:text-sm text-card-foreground">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              <div className="flex flex-wrap gap-2 sm:gap-3 mt-1 sm:mt-2">
-                {previewProject.demoUrl && (
-                  <a
-                    href={previewProject.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow hover:from-indigo-600 hover:to-purple-600 transition text-xs sm:text-sm border-none outline-none"
-                  >
-                    <FaRocket className="text-xs sm:text-base" />
-                    View Live Demo
-                  </a>
+              <button
+                className="absolute top-2 right-2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-2xl text-card-foreground bg-muted bg-opacity-40 rounded-full hover:bg-opacity-70 transition leading-none p-0 z-10"
+                onClick={closePreview}
+                aria-label="Close"
+              >
+                <span className="flex items-center justify-center w-full h-full">&times;</span>
+              </button>
+              <div className="w-full bg-muted flex items-center justify-center overflow-hidden p-0 m-0 flex-shrink-0 relative">
+                {previewProject.images && previewProject.images.length > 1 && (
+                  <>
+                    <button
+                      className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 bg-muted bg-opacity-40 hover:bg-opacity-70 text-card-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center z-10"
+                      onClick={handlePrevImage}
+                      aria-label="Previous image"
+                    >
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button
+                      className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 bg-muted bg-opacity-40 hover:bg-opacity-70 text-card-foreground rounded-full w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center z-10"
+                      onClick={handleNextImage}
+                      aria-label="Next image"
+                    >
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                  </>
                 )}
-                {previewProject.repoUrl && (
-                  <a
-                    href={previewProject.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-indigo-400 text-indigo-400 font-semibold hover:bg-indigo-400 hover:text-white transition text-xs sm:text-sm bg-transparent"
-                  >
-                    <FaFolderOpen className="text-xs sm:text-base" />
-                    View Source Code
-                  </a>
-                )}
+                <img
+                  src={previewProject.images?.[currentImageIdx] || ''}
+                  alt={previewProject.title}
+                  className="object-contain w-full h-48 sm:h-72 md:h-96 lg:h-[28rem] max-h-[28rem] bg-card mx-auto"
+                  style={{ maxWidth: '100%' }}
+                  loading="lazy"
+                />
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+              <div className="p-3 sm:p-6 md:p-8 pb-3 sm:pb-6 flex flex-col gap-2 sm:gap-3 md:gap-4 flex-1 overflow-y-auto custom-scrollbar">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">{previewProject.title}</h2>
+                <p className="text-sm sm:text-base md:text-lg text-foreground mb-1 sm:mb-2">{previewProject.description}</p>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-2 sm:mb-3 md:mb-4">{previewProject.fullDescription}</p>
+                {previewProject.features && (
+                  <div className="mb-2 sm:mb-4">
+                    <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-2 sm:mb-3">Key Features</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                      {previewProject.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-2 bg-card rounded-lg px-3 sm:px-4 py-2 sm:py-3">
+                          <span className="text-indigo-400">
+                            <svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 20 20' className='w-4 h-4 sm:w-5 sm:h-5'><path fillRule='evenodd' d='M16.704 6.29a1 1 0 0 1 .006 1.414l-6.002 6.06a1 1 0 0 1-1.414.006l-3.002-2.96a1 1 0 1 1 1.408-1.42l2.294 2.263 5.295-5.345a1 1 0 0 1 1.415-.018z' clipRule='evenodd'/></svg>
+                          </span>
+                          <span className="text-xs sm:text-sm text-card-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-2 sm:gap-3 mt-1 sm:mt-2">
+                  {previewProject.demoUrl && (
+                    <a
+                      href={previewProject.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow hover:from-indigo-600 hover:to-purple-600 transition text-xs sm:text-sm border-none outline-none"
+                    >
+                      <FaRocket className="text-xs sm:text-base" />
+                      View Live Demo
+                    </a>
+                  )}
+                  {previewProject.repoUrl && (
+                    <a
+                      href={previewProject.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-indigo-400 text-indigo-400 font-semibold hover:bg-indigo-400 hover:text-white transition text-xs sm:text-sm bg-transparent"
+                    >
+                      <FaFolderOpen className="text-xs sm:text-base" />
+                      View Source Code
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

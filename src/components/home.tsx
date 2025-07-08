@@ -11,7 +11,8 @@ import { useToast } from "./ui/use-toast";
 import { Toaster } from "./ui/toaster";
 import { inject } from "@vercel/analytics";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import ScrollSmoother from "gsap/ScrollSmoother";
 
 emailjs.init("3uTEW4Zev2niJ39DB"); // Replace with your Public Key
 
@@ -108,7 +109,7 @@ const Home = () => {
     // Inject Vercel Analytics
     inject();
 
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
     // About Me and Experience section animation (single style)
     if (aboutSectionRef.current) {
       gsap.fromTo(
@@ -126,6 +127,15 @@ const Home = () => {
         }
       );
     }
+    // Initialize ScrollSmoother
+    if (typeof window !== "undefined" && document.getElementById("smooth-wrapper")) {
+      ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 1.2,
+        effects: true,
+      });
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -139,43 +149,47 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-        {/* Header */}
-        <header className="container mx-auto px-4">
-          <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-        </header>
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-8">
-          {/* Hero Section */}
-          <div className="animate-fade-in" autoFocus>
-            <Hero />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+            {/* Header */}
+            <header className="container mx-auto px-4">
+              <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+            </header>
+            {/* Main Content */}
+            <main className="container mx-auto px-4 py-8">
+              {/* Hero Section */}
+              <div className="animate-fade-in" autoFocus>
+                <Hero />
+              </div>
+
+              {/* Experience Section */}
+              <Experience />
+
+              {/* Projects Section */}
+              <ProjectShowcase projects={projects} isDarkMode={isDarkMode} />
+
+             
+
+              <section id="terminal" className="mb-16 max-w-3xl mx-auto">
+                <h2 className="text-2xl font-bold mb-6">Interactive Terminal</h2>
+                <div className="rounded-lg overflow-hidden shadow-lg">
+                  <Terminal isDarkMode={isDarkMode} projects={projects} />
+                </div>
+                <p className="text-sm text-center mt-2 text-muted-foreground">
+                  Try typing 'help' in the terminal. 
+                </p>
+              </section>
+
+              {/* Contact Section */}
+              {/* Removed contact section */}
+            </main>
+            {/* Footer */}
+
           </div>
-
-          {/* Experience Section */}
-          <Experience />
-
-          {/* Projects Section */}
-          <ProjectShowcase projects={projects} isDarkMode={isDarkMode} />
-
-         
-
-          <section id="terminal" className="mb-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Interactive Terminal</h2>
-            <div className="rounded-lg overflow-hidden shadow-lg">
-              <Terminal isDarkMode={isDarkMode} projects={projects} />
-            </div>
-            <p className="text-sm text-center mt-2 text-muted-foreground">
-              Try typing 'help' in the terminal. 
-            </p>
-          </section>
-
-          {/* Contact Section */}
-          {/* Removed contact section */}
-        </main>
-        {/* Footer */}
-
+          <Toaster />
+        </div>
       </div>
-      <Toaster />
     </>
   );
 };

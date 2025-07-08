@@ -45,7 +45,8 @@ const ProjectCard = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full bg-background"
     >
       <Card className="overflow-hidden h-full flex flex-col border-2 hover:border-primary/50 transition-all duration-300">
