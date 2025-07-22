@@ -301,13 +301,13 @@ const defaultProjects: Project[] = [
   },
   {
     id: "3",
-    title: "Countdown Timer",
-    description: "A customizable countdown timer for events.",
+    title: "Devkits",
+    description: "A collection of essential developer tools and utilities in one place.",
     images: [
-      "/CountdownTimer.JPG"
+      "/Devkits.jpg"
     ],
     technologies: ["React", "JavaScript", "CSS"],
-    fullDescription: "Built a countdown timer with adjustable time, alerts, and a clean UI. Perfect for tracking deadlines or events.",
+    fullDescription: "Devkits brings together a suite of handy tools for developers, including code formatters, color pickers, and productivity boosters—all in a single, easy-to-use interface.",
   },
   {
     id: "4",

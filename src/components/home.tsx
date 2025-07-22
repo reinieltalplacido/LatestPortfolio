@@ -87,12 +87,20 @@ const Home = () => {
     },
     {
       id: "4",
-      title: "Event Countdown Timer",
-      description: "Track upcoming events with a live countdown and notifications.",
-      images: ["/CountdownTimer.JPG"],
-      technologies: ["React", "JavaScript", "CSS"],
-      fullDescription:
-        "Developed an event countdown timer that lets users add custom events, shows live time remaining, and sends notifications as deadlines approach. Clean, responsive UI makes it easy to manage multiple events across devices.",
+      title: "DevKits",
+      description: "🎨 DevKits – Personal UI System\nA collection of reusable components and design patterns built with Next.js, TypeScript, and Tailwind CSS. It's still a work in progress, constantly evolving as I build new projects.",
+      images: ["/Devkits.jpg"],
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+      fullDescription: "DevKits is my personal UI system and component library built using Next.js, Tailwind CSS, and TypeScript. It's under active development and meant to streamline my design workflow and speed up frontend development. Every component is handcrafted for consistency, minimalism, and reusability.",
+      features: [
+        "Reusable UI components",
+        "Minimalist and clean design",
+        "Tailwind-powered styling",
+        "TypeScript support for type safety",
+        "Easy to integrate into any project",
+        "Built with Next.js App Router",
+        "Still under construction — more components coming soon!"
+      ]
     }
   ];
 
